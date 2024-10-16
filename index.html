@@ -79,11 +79,6 @@
             margin-top: 20px;
         }
 
-        .ticket img {
-            margin-top: 10px;
-            width: 80px;
-        }
-
         .warning {
             color: #e74c3c;
             font-weight: bold;
@@ -110,25 +105,52 @@
             background-color: #1e7e34;
         }
 
+        /* Added styles for ticket content */
+        .ticket-content {
+            border: 2px solid #000;
+            padding: 15px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .ticket-content h2 {
+            font-size: 20px;
+        }
+
+        .ticket-content p {
+            font-size: 16px;
+        }
+
+        .logo-img {
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .car-img {
+            width: 80px;
+        }
+
         /* Print Styles */
         @media print {
             body * {
                 visibility: hidden;
             }
 
-            .ticket, .ticket * {
+            #ticketPreview, #ticketPreview * {
                 visibility: visible;
             }
 
-            .ticket {
+            #ticketPreview {
                 position: absolute;
                 top: 0;
                 left: 0;
-                right: 0;
                 margin: 0;
                 padding: 0;
-                width: 80mm;
-                height: 297mm;
+                width: 100%;
+            }
+
+            .action-buttons {
+                display: none;
             }
         }
     </style>
@@ -201,15 +223,17 @@
             const formattedDate = now.toLocaleString();
 
             const ticketHtml = `
-                <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo" style="width: 150px; margin-bottom: 10px;">
-                <h2>UNAUTHORIZED PARKING ON PRIVATE PROPERTY</h2>
-                <p>Date/Time: ${formattedDate}</p>
-                <p>License Plate: ${licensePlate}</p>
-                <p>Reason: ${reason}</p>
-                <p>Issuing Guard: ${issuingGuard}</p>
-                <p>Additional Notes: ${additionalNotes || 'N/A'}</p>
-                <img src="https://i.imgur.com/wdPLlvu.png" alt="Car Image" style="width: 50px;">
-                <p class="warning">WARNING: Unauthorized vehicles may be subject to fines and/or towing at the owner's expense.</p>
+                <div class="ticket-content">
+                    <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo" class="logo-img">
+                    <h2>UNAUTHORIZED PARKING ON PRIVATE PROPERTY</h2>
+                    <p><strong>Date/Time:</strong> ${formattedDate}</p>
+                    <p><strong>License Plate:</strong> ${licensePlate}</p>
+                    <p><strong>Reason:</strong> ${reason}</p>
+                    <p><strong>Issuing Guard:</strong> ${issuingGuard}</p>
+                    <p><strong>Additional Notes:</strong> ${additionalNotes || 'N/A'}</p>
+                    <img src="https://i.imgur.com/wdPLlvu.png" alt="Car Image" class="car-img">
+                    <p class="warning">WARNING: Unauthorized vehicles may be subject to fines and/or towing at the owner's expense.</p>
+                </div>
             `;
 
             document.getElementById('ticketPreview').innerHTML = ticketHtml;
