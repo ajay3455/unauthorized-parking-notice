@@ -112,6 +112,9 @@
             display: inline-block;
             text-align: center;
             width: 100%;
+            max-width: 700px; /* Set a max-width to fit printable area */
+            box-sizing: border-box; /* Include padding and border in width */
+            margin: 0 auto; /* Center the content */
         }
 
         .ticket-content h2 {
@@ -122,6 +125,7 @@
         .ticket-content p {
             font-size: 18px;
             margin: 5px 0;
+            word-wrap: break-word; /* Prevent text overflow */
         }
 
         .logo-img {
@@ -144,6 +148,12 @@
 
         /* Print Styles */
         @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                height: auto;
+            }
+
             body * {
                 visibility: hidden;
             }
@@ -153,15 +163,23 @@
             }
 
             #ticketPreview {
-                position: absolute;
+                position: relative;
                 top: 0;
                 left: 0;
-                margin: 0;
+                margin: 0 auto;
                 padding: 0;
                 width: 100%;
+                max-width: 700px; /* Ensure the ticket fits within the page */
             }
 
-            .action-buttons {
+            .ticket-content {
+                margin: 0;
+                width: 100%;
+                max-width: 700px;
+                box-sizing: border-box;
+            }
+
+            .action-buttons, .form-container {
                 display: none;
             }
         }
