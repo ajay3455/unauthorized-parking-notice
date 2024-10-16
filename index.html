@@ -2,42 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Gloucester on Yonge - Parking Ticket Generator</title>
     <style>
-        /* Import Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
         body {
             font-family: 'Roboto', sans-serif;
             background: linear-gradient(135deg, #e9efff, #f6d1e7);
             color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .container {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             width: 100%;
-            max-width: 800px;
-            align-items: center;
+            max-width: 1100px;
         }
 
-        .form-container {
+        .form-container, .ticket-container {
             background-color: #ffffff;
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
+            width: 45%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495e;
             margin-bottom: 20px;
         }
 
         .gloucester-logo img {
             display: block;
-            margin: 0 auto 20px auto;
+            margin: 0 auto;
             width: 200px;
             height: auto;
         }
@@ -45,69 +50,33 @@
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 700;
             color: #555;
-            font-size: 18px;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 10px;
+            margin-bottom: 12px;
             border: 2px solid #a3c9f1;
             border-radius: 6px;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         button {
             background-color: #67b4e8;
             color: white;
-            padding: 14px;
+            padding: 12px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             width: 100%;
-            font-weight: bold;
-        }
-
-        .ticket-container {
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
         }
 
         .ticket {
-            margin-top: 20px;
-            display: none;
-        }
-
-        .ticket-content {
-            border: 2px solid #000;
-            padding: 10px;
-            width: 80mm; /* Set width to 80mm for thermal printer */
-            max-width: 80mm;
-            box-sizing: border-box;
-            margin: 0 auto;
             text-align: center;
-        }
-
-        .ticket-content img {
-            width: 70%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .ticket-content h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .ticket-content p {
-            font-size: 20px;
-            margin: 5px 0;
-            font-weight: bold;
+            margin-top: 20px;
         }
 
         .warning {
@@ -120,14 +89,12 @@
             display: flex;
             justify-content: space-between;
             margin-top: 15px;
-            width: 100%;
         }
 
         .action-buttons button {
             width: 48%;
             background-color: #28a745;
             padding: 12px;
-            font-size: 18px;
         }
 
         .action-buttons button:hover {
@@ -138,39 +105,66 @@
             background-color: #1e7e34;
         }
 
+        /* Ticket content styles */
+        .ticket-content {
+            border: 2px solid #000;
+            padding: 15px;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .ticket-content h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .ticket-content p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .logo-img {
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .car-img {
+            width: 80px;
+            margin-top: 10px;
+        }
+
+        /* Adjusted ticket preview to show printed page */
+        .ticket-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         /* Print Styles */
         @media print {
-            body {
-                margin: 0;
-                padding: 0;
-            }
-
             body * {
                 visibility: hidden;
             }
 
-            #ticketPrintArea, #ticketPrintArea * {
+            #ticketPreview, #ticketPreview * {
                 visibility: visible;
             }
 
-            #ticketPrintArea {
+            #ticketPreview {
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 80mm;
-                max-width: 80mm;
                 margin: 0;
                 padding: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
-            .ticket-content {
-                border: none;
-                width: 80mm;
-                max-width: 80mm;
-                margin: 0;
-            }
-
-            .action-buttons, .form-container {
+            .action-buttons {
                 display: none;
             }
         }
@@ -185,7 +179,7 @@
                 <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo">
             </div>
             <form id="ticketForm">
-                <label for="licensePlate">License Plate (optional):</label>
+                <label for="licensePlate">License Plate:</label>
                 <input type="text" id="licensePlate" placeholder="e.g., ABC-1234">
 
                 <label for="reason">Reason for Ticket:</label>
@@ -214,25 +208,18 @@
                 <label for="additionalNotes">Additional Notes:</label>
                 <textarea id="additionalNotes" rows="4" placeholder="Any additional information..."></textarea>
 
-                <button type="submit">Generate Ticket</button>
+                <button type="submit">Generate & Print Ticket</button>
             </form>
         </div>
 
         <!-- Ticket Preview Section -->
         <div class="ticket-container">
-            <div id="ticketPreview" class="ticket">
-                <!-- Ticket content will appear here -->
-            </div>
+            <div id="ticketPreview" class="ticket"></div>
             <div class="action-buttons">
                 <button id="printTicket">Print Ticket</button>
                 <button id="downloadPDF">Download as PDF</button>
             </div>
         </div>
-    </div>
-
-    <!-- Hidden print area -->
-    <div id="ticketPrintArea" style="display: none;">
-        <!-- Ticket content for printing will be cloned here -->
     </div>
 
     <script>
@@ -250,36 +237,27 @@
             const now = new Date();
             const formattedDate = now.toLocaleString();
 
-            // Handle optional license plate
-            const licensePlateDisplay = licensePlate || '______________';
+            const licensePlateDisplay = licensePlate ? licensePlate : '____________';
 
             const ticketHtml = `
                 <div class="ticket-content">
-                    <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo">
-                    <h2>UNAUTHORIZED PARKING</h2>
+                    <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo" class="logo-img">
+                    <h2>UNAUTHORIZED PARKING ON PRIVATE PROPERTY</h2>
                     <p><strong>Date/Time:</strong> ${formattedDate}</p>
                     <p><strong>License Plate:</strong> ${licensePlateDisplay}</p>
                     <p><strong>Reason:</strong> ${reason}</p>
                     <p><strong>Issuing Guard:</strong> ${issuingGuard}</p>
                     <p><strong>Additional Notes:</strong> ${additionalNotes || 'N/A'}</p>
-                    <img src="https://i.imgur.com/wdPLlvu.png" alt="Car Image" style="width: 50%; margin-top: 10px;">
+                    <img src="https://i.imgur.com/wdPLlvu.png" alt="Car Image" class="car-img">
                     <p class="warning">WARNING: Unauthorized vehicles may be subject to fines and/or towing at the owner's expense.</p>
                 </div>
             `;
 
             document.getElementById('ticketPreview').innerHTML = ticketHtml;
-            document.getElementById('ticketPreview').style.display = 'block';
-
-            // Clone the ticket content for printing
-            document.getElementById('ticketPrintArea').innerHTML = ticketHtml;
         }
 
         document.getElementById('printTicket').addEventListener('click', function () {
-            if (document.getElementById('ticketPreview').innerHTML === '') {
-                alert('Please generate the ticket first.');
-            } else {
-                window.print();
-            }
+            window.print();
         });
 
         document.getElementById('downloadPDF').addEventListener('click', function () {
