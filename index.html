@@ -105,20 +105,23 @@
             background-color: #1e7e34;
         }
 
-        /* Added styles for ticket content */
+        /* Updated styles for ticket content */
         .ticket-content {
             border: 2px solid #000;
             padding: 15px;
             display: inline-block;
-            text-align: left;
+            text-align: center;
+            width: 100%;
         }
 
         .ticket-content h2 {
-            font-size: 20px;
+            font-size: 22px;
+            margin-bottom: 10px;
         }
 
         .ticket-content p {
-            font-size: 16px;
+            font-size: 18px;
+            margin: 5px 0;
         }
 
         .logo-img {
@@ -128,6 +131,15 @@
 
         .car-img {
             width: 80px;
+            margin-top: 10px;
+        }
+
+        /* Adjusted the ticket preview */
+        #ticketPreview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
         }
 
         /* Print Styles */
@@ -165,7 +177,8 @@
             </div>
             <form id="ticketForm">
                 <label for="licensePlate">License Plate:</label>
-                <input type="text" id="licensePlate" placeholder="e.g., ABC-1234" required>
+                <input type="text" id="licensePlate" placeholder="e.g., ABC-1234">
+                <!-- Removed 'required' attribute -->
 
                 <label for="reason">Reason for Ticket:</label>
                 <select id="reason" required>
@@ -199,7 +212,9 @@
 
         <!-- Ticket Preview Section -->
         <div class="ticket-container">
-            <div id="ticketPreview" class="ticket"></div>
+            <div id="ticketPreview" class="ticket">
+                <!-- Ticket content will appear here -->
+            </div>
             <div class="action-buttons">
                 <button id="printTicket">Print Ticket</button>
                 <button id="downloadPDF">Download as PDF</button>
@@ -222,12 +237,15 @@
             const now = new Date();
             const formattedDate = now.toLocaleString();
 
+            // Handle optional license plate
+            const licensePlateDisplay = licensePlate || '______________';
+
             const ticketHtml = `
                 <div class="ticket-content">
                     <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo" class="logo-img">
                     <h2>UNAUTHORIZED PARKING ON PRIVATE PROPERTY</h2>
                     <p><strong>Date/Time:</strong> ${formattedDate}</p>
-                    <p><strong>License Plate:</strong> ${licensePlate}</p>
+                    <p><strong>License Plate:</strong> ${licensePlateDisplay}</p>
                     <p><strong>Reason:</strong> ${reason}</p>
                     <p><strong>Issuing Guard:</strong> ${issuingGuard}</p>
                     <p><strong>Additional Notes:</strong> ${additionalNotes || 'N/A'}</p>
@@ -240,7 +258,11 @@
         }
 
         document.getElementById('printTicket').addEventListener('click', function () {
-            window.print();
+            if (document.getElementById('ticketPreview').innerHTML === '') {
+                alert('Please generate the ticket first.');
+            } else {
+                window.print();
+            }
         });
 
         document.getElementById('downloadPDF').addEventListener('click', function () {
