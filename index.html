@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +9,12 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #e9efff, #f6d1e7);
+            color: #333;
             margin: 0;
-            padding: 0;
+            padding: 10px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             height: 100vh;
         }
@@ -23,220 +23,205 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 1100px;
         }
 
-        .form-section {
-            width: 30%;
+        .form-container, .ticket-container {
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-right: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 45%;
         }
 
-        .form-section h1 {
+        h1 {
             text-align: center;
-            font-size: 1.5rem;
-            color: #333;
+            color: #34495e;
+            margin-bottom: 20px;
         }
 
-        .form-section img {
+        .gloucester-logo img {
             display: block;
-            margin: 10px auto 20px;
-            width: 120px;
+            margin: 0 auto;
+            width: 200px;
+            height: auto;
         }
 
         label {
             display: block;
-            font-weight: bold;
             margin-bottom: 8px;
+            font-weight: 700;
+            color: #555;
         }
 
         input, select, textarea {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            margin-bottom: 12px;
+            border: 2px solid #a3c9f1;
+            border-radius: 6px;
+            font-size: 16px;
         }
 
         button {
-            width: 100%;
+            background-color: #67b4e8;
+            color: white;
             padding: 12px;
-            background-color: #3498db;
-            color: #fff;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            width: 100%;
         }
 
-        button:hover {
-            background-color: #2980b9;
+        .ticket {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        .ticket-preview {
-            width: 40%;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .ticket-preview img {
-            display: block;
-            margin: 10px auto;
+        .ticket img {
+            margin-top: 10px;
             width: 80px;
         }
 
-        .ticket-preview h2 {
-            font-size: 1.25rem;
-            text-align: center;
-            margin-bottom: 15px;
+        .warning {
             color: #e74c3c;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
-        .ticket-details p {
-            font-size: 16px;
-            margin: 8px 0;
-        }
-
-        .ticket-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        .action-section {
-            width: 20%;
+        .action-buttons {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            justify-content: space-between;
+            margin-top: 15px;
         }
 
-        .action-button {
+        .action-buttons button {
+            width: 48%;
+            background-color: #28a745;
             padding: 12px;
-            background-color: #27ae60;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 16px;
-            cursor: pointer;
         }
 
-        .action-button:hover {
-            background-color: #219150;
+        .action-buttons button:hover {
+            background-color: #218838;
         }
 
-        .header-logo {
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .action-buttons button:active {
+            background-color: #1e7e34;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .ticket, .ticket * {
+                visibility: visible;
+            }
+
+            .ticket {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                margin: 0;
+                padding: 0;
+                width: 80mm;
+                height: 297mm;
+            }
         }
     </style>
 </head>
-
 <body>
+
     <div class="container">
         <!-- Form Section -->
-        <div class="form-section">
-            <h1>The Gloucester on Yonge</h1>
-            <img src="https://i.imgur.com/LmweghF.png" alt="Gloucester Logo" class="header-logo">
-            <label for="licensePlate">License Plate:</label>
-            <input type="text" id="licensePlate" placeholder="e.g., ABC-1234" required>
+        <div class="form-container">
+            <div class="gloucester-logo">
+                <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo">
+            </div>
+            <form id="ticketForm">
+                <label for="licensePlate">License Plate:</label>
+                <input type="text" id="licensePlate" placeholder="e.g., ABC-1234" required>
 
-            <label for="reason">Reason for Ticket:</label>
-            <select id="reason" required>
-                <option value="">Select a reason</option>
-                <option value="Not signed in at the front desk">Not signed in at the front desk</option>
-                <option value="Incorrect signed-in details at the front desk">Incorrect signed-in details at the front desk</option>
-                <option value="Extended parking beyond authorized duration">Extended parking beyond authorized duration</option>
-                <option value="Parking not allowed in this area">Parking not allowed in this area</option>
-                <option value="Other">Other</option>
-            </select>
+                <label for="reason">Reason for Ticket:</label>
+                <select id="reason" required>
+                    <option value="">Select a reason</option>
+                    <option value="Not signed in at the front desk">Not signed in at the front desk</option>
+                    <option value="Incorrect signed-in details at the front desk">Incorrect signed-in details at the front desk</option>
+                    <option value="Incomplete or missing signed-in details at the front desk">Incomplete or missing signed-in details at the front desk</option>
+                    <option value="Extended parking beyond authorized duration">Extended parking beyond authorized duration</option>
+                    <option value="Parking not allowed in this area">Parking not allowed in this area</option>
+                </select>
 
-            <label for="issuingGuard">Issuing Guard:</label>
-            <select id="issuingGuard" required>
-                <option value="">Select a guard</option>
-                <option value="Ajaypreet">Ajaypreet</option>
-                <option value="Amritpal">Amritpal</option>
-                <option value="Meet">Meet</option>
-                <option value="Jatin">Jatin</option>
-                <option value="Praveen">Praveen</option>
-            </select>
+                <label for="issuingGuard">Issuing Guard:</label>
+                <select id="issuingGuard" required>
+                    <option value="">Select a guard</option>
+                    <option value="Ajaypreet">Ajaypreet</option>
+                    <option value="Amritpal">Amritpal</option>
+                    <option value="Meet">Meet</option>
+                    <option value="Jatin">Jatin</option>
+                    <option value="Praveen">Praveen</option>
+                    <option value="Jashanpreet">Jashanpreet</option>
+                    <option value="Arnav">Arnav</option>
+                    <option value="Gurwinder">Gurwinder</option>
+                </select>
 
-            <label for="additionalNotes">Additional Notes:</label>
-            <textarea id="additionalNotes" rows="3" placeholder="Any additional information..."></textarea>
+                <label for="additionalNotes">Additional Notes:</label>
+                <textarea id="additionalNotes" rows="4" placeholder="Any additional information..."></textarea>
 
-            <button id="generateTicketBtn">Generate & Print Ticket</button>
+                <button type="submit">Generate & Print Ticket</button>
+            </form>
         </div>
 
         <!-- Ticket Preview Section -->
-        <div class="ticket-preview" id="ticketPreview">
-            <img src="https://i.imgur.com/LmweghF.png" alt="Gloucester Logo" class="header-logo">
-            <h2>UNAUTHORIZED PARKING ON PRIVATE PROPERTY</h2>
-            <div class="ticket-details">
-                <p><strong>Date/Time:</strong> <span id="dateTime"></span></p>
-                <p><strong>License Plate:</strong> <span id="ticketLicensePlate"></span></p>
-                <p><strong>Reason:</strong> <span id="ticketReason"></span></p>
-                <p><strong>Issuing Guard:</strong> <span id="ticketGuard"></span></p>
-                <p><strong>Additional Notes:</strong> <span id="ticketNotes"></span></p>
+        <div class="ticket-container">
+            <div id="ticketPreview" class="ticket"></div>
+            <div class="action-buttons">
+                <button id="printTicket">Print Ticket</button>
+                <button id="downloadPDF">Download as PDF</button>
             </div>
-            <img src="https://i.imgur.com/wdPLlvu.png" alt="Parking Notice" class="car-logo">
-            <p class="ticket-footer">WARNING: Unauthorized vehicles may be subject to fines and/or towing at the owner's expense.</p>
-        </div>
-
-        <!-- Action Section -->
-        <div class="action-section">
-            <button class="action-button" id="printTicket">Print Ticket</button>
-            <button class="action-button" id="downloadTicket">Download as PDF</button>
         </div>
     </div>
 
     <script>
-        const generateTicketBtn = document.getElementById('generateTicketBtn');
-        const ticketPreview = document.getElementById('ticketPreview');
-        const printTicketBtn = document.getElementById('printTicket');
-        const downloadTicketBtn = document.getElementById('downloadTicket');
-
-        generateTicketBtn.addEventListener('click', function () {
-            const licensePlate = document.getElementById('licensePlate').value;
-            const reason = document.getElementById('reason').value;
-            const issuingGuard = document.getElementById('issuingGuard').value;
-            const additionalNotes = document.getElementById('additionalNotes').value || 'N/A';
-
-            if (licensePlate && reason && issuingGuard) {
-                document.getElementById('ticketLicensePlate').textContent = licensePlate.toUpperCase();
-                document.getElementById('ticketReason').textContent = reason;
-                document.getElementById('ticketGuard').textContent = issuingGuard;
-                document.getElementById('ticketNotes').textContent = additionalNotes;
-                document.getElementById('dateTime').textContent = new Date().toLocaleString();
-
-                ticketPreview.style.display = 'block';
-            } else {
-                alert('Please fill in all required fields.');
-            }
+        document.getElementById('ticketForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            generateTicket();
         });
 
-        printTicketBtn.addEventListener('click', function () {
+        function generateTicket() {
+            const licensePlate = document.getElementById('licensePlate').value.trim();
+            const reason = document.getElementById('reason').value.trim();
+            const issuingGuard = document.getElementById('issuingGuard').value.trim();
+            const additionalNotes = document.getElementById('additionalNotes').value.trim();
+
+            const now = new Date();
+            const formattedDate = now.toLocaleString();
+
+            const ticketHtml = `
+                <img src="https://i.imgur.com/LmweghF.png" alt="The Gloucester Logo" style="width: 150px; margin-bottom: 10px;">
+                <h2>UNAUTHORIZED PARKING ON PRIVATE PROPERTY</h2>
+                <p>Date/Time: ${formattedDate}</p>
+                <p>License Plate: ${licensePlate}</p>
+                <p>Reason: ${reason}</p>
+                <p>Issuing Guard: ${issuingGuard}</p>
+                <p>Additional Notes: ${additionalNotes || 'N/A'}</p>
+                <img src="https://i.imgur.com/wdPLlvu.png" alt="Car Image" style="width: 50px;">
+                <p class="warning">WARNING: Unauthorized vehicles may be subject to fines and/or towing at the owner's expense.</p>
+            `;
+
+            document.getElementById('ticketPreview').innerHTML = ticketHtml;
+        }
+
+        document.getElementById('printTicket').addEventListener('click', function () {
             window.print();
         });
 
-        downloadTicketBtn.addEventListener('click', function () {
-            const element = document.createElement('a');
-            const file = new Blob([document.getElementById('ticketPreview').innerHTML], { type: 'text/html' });
-            element.href = URL.createObjectURL(file);
-            element.download = 'ParkingTicket.html';
-            document.body.appendChild(element);
-            element.click();
+        document.getElementById('downloadPDF').addEventListener('click', function () {
+            alert('Feature coming soon...');
         });
     </script>
 </body>
-
 </html>
